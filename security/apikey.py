@@ -9,6 +9,7 @@ def get_key(type = types.CHAT_CLIENT):
     org = None
     proj = None
     role = 'user'
+    audio_model = 'whisper-1'
     chat_model = 'gpt-3.5-turbo'
     image_model = 'dall-e-2'
 
@@ -29,6 +30,11 @@ def get_key(type = types.CHAT_CLIENT):
                     model = data['image_model']
                 else:
                     model = image_model
+            elif type == types.AUDIO_CLIENT:
+                if 'audio_model' in data:
+                    model = data['audio_model']
+                else:
+                    model = audio_model
 
             if type == types.CHAT_CLIENT:
                 if 'chat_model' in data:

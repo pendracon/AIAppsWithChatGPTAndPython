@@ -14,11 +14,16 @@ def __get_client(type = types.CHAT_CLIENT):
     else:
         client = OpenAI(api_key = key)
 
-    if type == types.IMAGE_CLIENT:
+    if type == types.IMAGE_CLIENT or type == types.AUDIO_CLIENT:
         return client, model
     else:
         return client, role, model
 # end def: get_client
+
+def get_audio_client():
+    client, model = __get_client(types.AUDIO_CLIENT)
+    return client, model
+# end def: get_chat_client
 
 def get_chat_client():
     client, role, model = __get_client(types.CHAT_CLIENT)

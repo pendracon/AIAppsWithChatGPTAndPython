@@ -1,11 +1,10 @@
-from security import apikey
 from util import openai as gpt
 
 def main():
-    client, role, gpt_model = gpt.get_client()
+    client, role, gpt_model = gpt.get_chat_client()
 
     while True:
-        prompt = input('Prompt: ')
+        prompt = input('Prompt ("exit" to quit): ')
         if prompt == 'exit':
             break
         response = client.chat.completions.create(

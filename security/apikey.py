@@ -1,25 +1,41 @@
 import json
 import sys
 
+from util import model as types
+
 KEY_FILE = '.apikey'
 
-def get_key():
+def get_key(type = types.CHAT_CLIENT):
     org = None
     proj = None
     role = 'user'
-    model = 'gpt-4o-mini'
+    chat_model = 'gpt-3.5-turbo'
+    image_model = 'dall-e-2'
 
     try:
         with open(KEY_FILE) as f:
             data = json.load(f)
             if 'organization' in data:
                 org = data['organization']
+
             if 'project' in data:
                 proj = data['project']
+
             if 'role' in data:
                 role = data['role']
-            if 'model' in data:
-                model = data['model']
+
+            if type == types.IMAGE_CLIENT:
+                if 'image_model' in data:
+                    model = data['image_model']
+                else:
+                    model = image_model
+
+            if type == types.CHAT_CLIENT:
+                if 'chat_model' in data:
+                    model = data['chat_model']
+                else:
+                    model = chat_model
+
             if 'key' not in data:
                 print(f'API key not found.')
                 sys.exit(1)

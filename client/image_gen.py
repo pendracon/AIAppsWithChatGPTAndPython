@@ -1,3 +1,7 @@
+import requests
+from PIL import Image
+from io import BytesIO
+
 from util import openai as gpt
 
 def main():
@@ -65,6 +69,9 @@ def main():
         print(f'Generated {len(response.data)} images:')
         for i, image in enumerate(response.data):
             print(f'Image {i + 1}: {image.url}')
+            image_url = requests.get(image.url)
+            img = Image.open(BytesIO(image_url.content))
+            img.show()
 # end def: main
 
 if __name__ == '__main__':

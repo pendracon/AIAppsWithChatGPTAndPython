@@ -164,6 +164,7 @@ cython_debug/
 
 # misc
 *.bak
+*.code-workspace
 *.tmp
 *.log
 *.vscode/

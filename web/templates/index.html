@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <title>Personal GPT</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css">
+    <style>
+      .container {
+        margin-top: 50px;
+      }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"></script>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>Personal GPT</h1>
+      <p>Enter a prompt and get a response from ChatGPT.</p>
+    </div>
+
+    <div class="container">
+      <form id="promptForm" class="form-horizontal">
+        <div class="form-group row">
+          <div class="col-sm-10">
+            <textarea class="form-control" id="prompt" name="prompt" rows="3" placeholder="Enter text">{{ prompt }}</textarea>
+          </div>
+        </div>
+        <div class="form-group row">
+          <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="container" id="responseContainer" style="display: none;">
+      <h3>Response</h3>
+      <p id="r1">{{ response }}</p>
+      <p id="r2">{{ token_cost }}</p>
+    </div>
+
+    <script>
+      $(document).ready(function() {
+        $("#promptForm").submit(function(event) {
+          event.preventDefault();
+          var promptText = $("#prompt").val();
+
+          if (promptText.length === 0) {
+            alert("Please enter a prompt.");
+            return;
+          }
+
+          $.ajax({
+            type: "POST",
+            url: "/chat",
+            data: JSON.stringify({ prompt: promptText }),
+            contentType: "application/json",
+            success: function(data) {
+              $("#responseContainer").show();
+              $("#responseContainer p#r1").text(data.response);
+              $("#responseContainer p#r2").text("[Tokens used: " + data.tokens + "]");
+            },
+            error: function(xhr, status, error) {
+              alert("An error occurred. Please try again.");
+              console.log("Error: " + error);
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+
+</html>

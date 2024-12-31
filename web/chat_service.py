@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 import os
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, render_template, request
 
 from util import openai as gpt
 
@@ -26,10 +26,11 @@ def chat():
     )
     chatgpt = response.choices[0].message.content
     token_cost = response.usage.total_tokens
-    return jsonify({
+
+    return {
         'response': chatgpt,
         'tokens': token_cost,
-    })
+    }
 # end def: chat
 
 if __name__ == '__main__':

@@ -1,0 +1,21 @@
+{
+    "manifest_version": 2,
+    "name": "Personal GPT",
+    "version": "1.0",
+    "description": "A Personal GPT plugin for Chrome.",
+    "permissions": [
+        "http://localhost:5000/*"
+    ],
+    "browser_action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "images/chat-gpt-icon-16.png",
+            "48": "images/chat-gpt-icon-48.png",
+            "128": "images/chat-gpt-icon-128.png"
+        }
+    },
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
+    }
+}

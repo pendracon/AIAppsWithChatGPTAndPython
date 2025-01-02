@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <title>Personal GPT Transcriber</title>
+    <meta charset="utf-8">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: lightgray;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .container {
+            min-width: 500px;
+            max-width: 50%;
+            margin: 0 auto;
+            background-color: white;
+            border: 1px solid #ccc;
+            padding: 20px;
+        }
+
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+
+        .audio-text {
+            margin-top: 20px;
+        }
+
+        .audio-text h3 {
+            color: #333;
+        }
+
+        .audio-text p {
+            margin: 0;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .btn-send {
+            padding: 8px 16px;
+            background-color: lightgreen;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-send:hover {
+            background-color: darkgreen;
+        }
+
+        .file-send {
+            margin-bottom: 20px;
+        }
+
+        .filename {
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        function showFilename() {
+            var audioFile = document.getElementById('audio_file');
+            var filenameDiv = document.getElementById('filename-div');
+
+            if (audioFile.files.length > 0) {
+                filenameDiv.style.display = 'block';
+                filenameDiv.innerText = audioFile.files[0].name;
+            }
+            else {
+                filenameDiv.style.display = 'none';
+            }
+        }
+    </script>
+  </head>
+
+  <body>
+    <div class="container">
+        <h1>Personal GPT Transcriber</h1>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
+        <br>
+        <form class="file-send" method="post" enctype="multipart/form-data" action="/transcribe">
+            <div>
+                <input type="file" id="audio_file" name="audio_file" accept="audio/*" required onchange="showFilename()">
+                <label for="audio_file" class="btn-send">Choose an audio file</label>
+            </div>
+            <div id="filename-div" class="filename"></div>
+            <br>
+            <input type="submit" value="Transcribe">
+        </form>
+        <br>
+        {% if audio_text %}
+            <div class="audio-text">
+                <h3>Audio Text:</h3>
+                <p>{{ audio_text }}</p>
+            </div>
+        {% endif %}
+    </div>
+  </body>
+
+</html>
